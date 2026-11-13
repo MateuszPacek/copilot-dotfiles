@@ -1,0 +1,14 @@
+# Ignore everything at the repository root by default.
+/*
+
+# Track this file and selected support files.
+!/.gitignore
+!/glossary.md
+!/workflow-guide.md
+
+# Track the selected folders and their contents.
+!/instructions/
+!/agents/
+!/skills/
+!/workflows/
+!/hooks/

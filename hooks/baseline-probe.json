@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "powershell": "powershell.exe -NoProfile -NonInteractive -File \"C:\\Users\\MPACEK\\.copilot\\hooks\\baseline-probe.ps1\" -EventName sessionStart",
+        "timeoutSec": 10
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "powershell": "powershell.exe -NoProfile -NonInteractive -File \"C:\\Users\\MPACEK\\.copilot\\hooks\\baseline-probe.ps1\" -EventName userPromptSubmitted",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}
