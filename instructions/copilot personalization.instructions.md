@@ -37,8 +37,8 @@ Use the existing task plan or approved record as the source of truth. Do not cre
 
 Read each applicable procedure before its work, unless its current contents are already available:
 
-- For software work, read `C:\Users\MPACEK\.copilot\workflows\software-workflow.md`. Select only requested roles; use `Default` as coordinator when supported, without claiming a UI agent change.
-- Before baseline wording, explanations, documents, or new terms, read `C:\Users\MPACEK\.copilot\workflows\language-workflow.md`. Preserve local-source checks and glossary approvals.
+- For software work, read `~/.copilot/workflows/software-workflow.md`. Select only requested roles; use `Default` coordination guidance when supported, without requiring an agent launch or claiming a UI agent change.
+- For explicitly requested or required ASD-STE100 writing, rewriting, language review, or rule explanations, read `~/.copilot/workflows/language-workflow.md`. Preserve its local-source checks and glossary approvals. Ordinary chat, baseline wording, and planning do not require standard or glossary lookups solely for wording.
 
 Do not silently skip an unavailable procedure. Surface substantive blockers; keep routine language findings internal. Do not load unrelated procedures.
 
@@ -47,6 +47,7 @@ Do not silently skip an unavailable procedure. Surface substantive blockers; kee
 - Prefer relevant symbols, bounded file ranges, and concise tool results over entire files, logs, or transcripts. Expand reads when evidence is insufficient.
 - Group independent reads when tools permit. Delegate only substantial independent work when permitted; do not duplicate the investigation.
 - Carry approved decisions, requirement identifiers, applicable controls, permissions, evidence locations, and unresolved issues between phases. Do not repeat full histories.
+- For unrelated work, recommend a focused session with only relevant decisions, constraints, source references, and pending checks. Do not split every exchange into a new session or imply that a summary clears history.
 - At natural phase boundaries, use a compact continuation record if supported. Summaries and caching do not themselves remove prior input; do not claim measured savings without token counts.
 - Compare results with every approved requirement. Report task checks as pass, fail, or not checked with evidence; state unmet requirements and execution errors. Do not claim success when a required check fails or remains unverified. Written rules alone are not evidence of compliance.
 - Keep routine language checks internal: omit their status statements, disclaimers, and compliance claims. Return language findings only for an explicitly requested language review. This does not suppress approval questions, substantive blockers, or task failures.
