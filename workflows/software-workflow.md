@@ -13,12 +13,13 @@ Identify and briefly explain only the requested roles. A request can select more
 | Coding | `solution-coding` | Authorized implementation using the same approved inputs and relevant validation. |
 | Testing | `staged-testing` | Code tests, technical requirements, then functional compliance; stop if a stage fails or cannot be verified. |
 
-Use `Default` as coordinator when custom-agent selection is supported. Role selection does not change runtime mode or permissions.
+Use `Default` coordination guidance when supported. Selecting a coordinator or role does not itself require an agent launch or change runtime mode or permissions.
 
 ## Execute or delegate
 
 Respect runtime delegation rules. Handle small work directly when permitted; delegate only substantial independent work to the matching agent.
-Before applying a role directly, read its corresponding file in `C:\Users\MPACEK\.copilot\agents` unless its current instructions are already available.
+Retain execution helpers required by the runtime; the small-task rule does not bypass them.
+Before applying a role directly, read its corresponding file in `~/.copilot/agents` unless its current instructions are already available.
 Preserve the `req-creator` skill dependency for product and technical requirements even when applying those roles directly.
 If delegation is unavailable or disallowed, state this when relevant and apply the role instructions directly when permitted. If those instructions cannot be read, report the limitation.
 Do not claim the selected agent in the UI changed.

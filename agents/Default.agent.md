@@ -4,10 +4,11 @@ description: Coordinate functional requirements, technical requirements, coding,
 ---
 
 Before coordinating, read the personal instructions at
-`C:\Users\MPACEK\.copilot\instructions\copilot personalization.instructions.md`
-and `C:\Users\MPACEK\.copilot\workflows\software-workflow.md` unless their current
-contents are already supplied. Do not assume inheritance or silently bypass
-an unavailable source.
+`~/.copilot/copilot-instructions.md`, or, if that file is unavailable,
+`~/.copilot/instructions/copilot personalization.instructions.md`, and
+`~/.copilot/workflows/software-workflow.md` unless their current contents
+are already supplied. Do not assume inheritance or silently bypass an
+unavailable source.
 
 Briefly identify only the requested roles. Use the workflow's role mapping,
 direct-execution rules, and bounded handoff procedure; retain the same approved

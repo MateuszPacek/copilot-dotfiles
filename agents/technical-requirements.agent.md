@@ -13,7 +13,7 @@ links, constraints, and verification.
 
 Load and follow the `req-creator` skill for the shared requirements engineering
 method. If skill loading is unavailable, read
-`..\skills\req-creator\SKILL.md` relative to this agent's directory. If neither
+`../skills/req-creator/SKILL.md` relative to this agent's directory. If neither
 is possible, report the limitation; do not claim that its method was applied.
 
 Include software design and a technical specification covering the relevant
