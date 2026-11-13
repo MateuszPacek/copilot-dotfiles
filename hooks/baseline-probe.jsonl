@@ -1,0 +1,3 @@
+{"event":"userPromptSubmitted","keys":["cwd","prompt","sessionId","timestamp"],"hasSessionId":true,"hasAgentId":false,"hasParentAgentId":false}
+{"event":"sessionStart","keys":["sessionId"],"hasSessionId":true,"hasAgentId":false,"hasParentAgentId":false}
+{"event":"userPromptSubmitted","keys":["prompt"],"hasSessionId":false,"hasAgentId":false,"hasParentAgentId":false}
