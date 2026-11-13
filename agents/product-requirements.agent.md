@@ -12,7 +12,7 @@ information; do not invent decisions or treat assumptions as approved.
 
 Load and follow the `req-creator` skill for the shared requirements engineering
 method. If skill loading is unavailable, read
-`..\skills\req-creator\SKILL.md` relative to this agent's directory. If neither
+`../skills/req-creator/SKILL.md` relative to this agent's directory. If neither
 is possible, report the limitation; do not claim that its method was applied.
 
 Express functional requirements as product requirements. Model behavior with
