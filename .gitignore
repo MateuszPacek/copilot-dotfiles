@@ -4,6 +4,7 @@
 # Track this file and selected support files.
 !/.gitignore
 !/install.sh
+!/install-claude.sh
 !/codespaces-guide.md
 !/glossary.md
 !/workflow-guide.md
@@ -14,3 +15,6 @@
 !/skills/
 !/workflows/
 !/hooks/
+!/prompts/
+!/claude/
+!/templates/
