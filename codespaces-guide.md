@@ -1,8 +1,8 @@
 # Personal Copilot setup for Codespaces
 
 This repository can install personal Copilot instructions, agents, skills, and
-supporting files in a new Codespace. Project files remain separate. The
-installer does not install hooks or VS Code user settings.
+workflow helpers in a new Codespace. Project files remain separate. The
+installer does not install Copilot hook configuration or VS Code user settings.
 
 ## Current limitation
 
@@ -23,11 +23,8 @@ Do not copy or upload the standard as part of this setup.
    that approval.
 2. In VS Code, open **Source Control** and review each change. Do not upload
    credentials, confidential information, or restricted material.
-3. Review the existing tracked `hooks/baseline-probe.jsonl` diagnostic data.
-   The installer does not use it, but it is already tracked by Git. An ignore
-   rule does not remove tracked data or erase repository history.
-4. Review the staged skill tracking change and all skill files before publishing.
-5. On Windows, stage the installer with executable permission. In a terminal
+3. Review all skill files before publishing.
+4. On Windows, stage the installer with executable permission. In a terminal
    opened at the repository root, use:
 
    ```text
@@ -60,6 +57,11 @@ The installer places personal files under `~/.copilot` on the Codespace host.
 It derives the general personal instruction file from the existing personal
 instruction source, and does not also install that source as a modular
 instruction. Other modular instructions remain separate.
+It also installs `workflow-kit/` under `~/.copilot`. For the Claude Code route,
+run `bash ~/.copilot/workflow-kit/install-claude.sh`; that installer places the
+Claude-specific files in `~/.claude` and project helpers in `~/.workflow-kit`.
+Review the workflow guide before merging its devcontainer snippet into a
+project configuration.
 
 Copilot can combine applicable personal and project instructions. There is no
 general precedence rule between them, so resolve conflicting instructions

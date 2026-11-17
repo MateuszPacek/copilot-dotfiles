@@ -1,42 +1,96 @@
 # Software workflow
 
-Read for software work. Shared approval, privacy, glossary, and reporting controls remain in the personal instructions; do not copy them into each role.
+Read for software work. Shared approval, privacy, glossary, and reporting
+controls remain in the personal instructions; do not copy them into each role.
 
-## Select roles
+## Roles
 
-Identify and briefly explain only the requested roles. A request can select more than one; do not add unrequested work.
-
-| Role | Agent | Necessary output |
+| Work | Agent | Output |
 |---|---|---|
-| Business requirements | `business-requirements` | Measureable business requirements and solution-neutral models user-based usecases and scenarios, including goals, scope, and out-of-scope items. Explain when a suitable model cannot be produced. |
-| Functional requirements | `product-requirements` | Testable product requirements and implementation-independent behavior models where possible. Explain when a suitable model cannot be produced. |
-| Technical requirements | `technical-requirements` | Software design and technical specification linked to applicable product requirements and models. |
-| Coding | `solution-coding` | Authorized implementation using the same approved inputs and relevant validation. |
-| Testing | `staged-testing` | Code tests, technical requirements, then functional compliance; stop if a stage fails or cannot be verified. |
+| Coordination | `Default` | One `/flow` action at a time; status, branches and handoffs |
+| Requirements | `requirements-author` | Business, product and technical requirements, models where suitable, and KPI definitions |
+| Coding | `coder` | Test-first implementation of approved technical requirements |
+| Gates | `verifier` | Independent verification and gate report for the selected layer |
 
-Use `Default` coordination guidance when supported. Selecting a coordinator or role does not itself require an agent launch or change runtime mode or permissions.
+Use the specialist handoffs for requirements, coding and gates. A gate must be
+independent of the authoring work; run the Copilot verifier in a fresh chat.
+Claude Code runs requirements and coding in the main conversation and the
+verifier as a subagent. Do not claim that a visible agent selection changed.
 
-## Execute or delegate
+## Requirements and gates
 
-Respect runtime delegation rules. Handle small work directly when permitted; delegate only substantial independent work to the matching agent.
-Retain execution helpers required by the runtime; the small-task rule does not bypass them.
-Before applying a role directly, read its corresponding file in `~/.copilot/agents` unless its current instructions are already available.
-Preserve the `req-creator` skill dependency for product and technical requirements even when applying those roles directly.
-If delegation is unavailable or disallowed, state this when relevant and apply the role instructions directly when permitted. If those instructions cannot be read, report the limitation.
-Do not claim the selected agent in the UI changed.
+The workflow is business requirements (BR) -> product requirements (PRD) ->
+technical requirements (TR) -> code. Requirements work is interview-first and
+uses `requirements-authoring` and the existing `req-creator` guidance. Product
+models describe behavior independently of implementation choices where a
+suitable model can be produced. Technical work includes software design and a
+technical specification linked to product requirements and models.
 
-## Handoff
+Use stable IDs (`BR-001`, `PRD-001`, `TR-001`, `KPI-001`) and never reuse a
+retired ID. Requirements link to their parents and children. Acceptance
+criteria must be measurable. Tests identify the requirement they verify;
+uncovered requirements fail the gate.
 
-Provide a bounded objective and stop condition, with only relevant:
-- Original request, approved baseline version and text, scope, decisions, and open questions.
-- Product requirements, models, software design, technical specification, and requirement identifiers applicable to the selected role.
-- Source paths or bounded excerpts, evidence locations, and verification results.
-- Personal and project controls, constraints, and granted permissions.
+| Layer | Gate |
+|---|---|
+| BR | Each business requirement links to a KPI with a target, measurable pass threshold and data source |
+| PRD | Functional tests pass and cover PRD IDs |
+| TR | Integration tests pass and cover TR IDs |
+| Code | Unit tests pass and cover TR IDs; zero collected tests is a failure |
 
-Do not assume agents inherit instructions. If inheritance is uncertain, supply applicable controls explicitly or require the agent to read the exact source before acting.
-A file path alone is insufficient when the recipient cannot read it.
-Do not send full conversation histories or execution logs by default.
-Ask for missing inputs or permissions; do not invent requirements or treat assumptions as approved.
+The verifier checks only the selected layer, records the commit SHA, per-ID
+results and evidence in `workflow/gates/`, and updates `workflow/state.md`.
+A PASS is valid only for that commit. On failure, return the report and ask
+the user before filing an issue. Missing requirements or test commands are
+not invented.
 
-Return concise findings, changed-file references, evidence, and unresolved issues. Reuse the authoritative task record rather than making another copy.
-Routine coding validation does not establish completion of the separate staged-testing role.
+## Branches and staged pull requests
+
+Use stacked branches: `feat/<slug>/br` from the default branch,
+`feat/<slug>/prd` from BR, `feat/<slug>/tr` from PRD, and
+`feat/<slug>/code` from TR. Passing layers use pull requests into their parent
+branch. The user merges them bottom-up; agents never merge. PR creation
+requires a passing gate for the current HEAD and follows `pr_mode` in
+`workflow/config.md`.
+
+The fix action is optional and user-triggered. It creates a new issue branch,
+does not edit requirements, and stops after at most two attempts.
+
+## Project context and cost
+
+Project requirements, conventions, glossary, workflow state and evidence stay
+in the relevant project. Read the state, config, current layer, its parent and
+glossary as required by the selected skill. Ask for blank stack, test-command,
+PR-mode or issue-label values rather than guessing.
+
+Keep always-on instructions brief and put procedures in on-demand skills.
+Instructions guide the model; they are not a security boundary. Tool
+restrictions, agent selection, delegation and runtime behavior must be checked
+in the intended VS Code or Codespaces environment. Hard gates require branch
+protection and required checks.
+
+The optional Claude Code layer installs its project helpers from
+`workflow-kit/`. Its hook warns if Anthropic API credentials are present but
+cannot block them. Use only the user's approved subscription authentication
+route; never place credentials in the repository. The devcontainer snippet is
+provided for review and must be merged with existing project settings, not
+copied over them.
+
+## Hook diagnostics
+
+The personal `baseline-probe` hook records `sessionStart` and
+`userPromptSubmitted` events. Its script stays in the protected personal hooks
+folder. It writes one UTF-8 JSONL file per invocation under
+`[IO.Path]::GetTempPath()\copilot-hook-diagnostics`, not beside the script.
+The runtime's temporary folder must permit writes in the session sandbox.
+Do not grant write access to hook code to enable diagnostic records.
+
+Each record contains the event name, UTC recording time, input property names,
+and flags for the presence of session and agent identifiers. It does not record
+prompt text or identifier values. Unique file names prevent concurrent hook
+invocations from appending to the same file. Files remain until temporary-file
+cleanup removes them.
+
+A successful invocation writes `{}` to standard output. Invalid input or a
+failed file write produces an explicit error and exit code 1. Direct script
+tests alone do not verify runtime dispatch.

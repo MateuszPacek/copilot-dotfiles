@@ -3,7 +3,7 @@ description: Implements technical requirements test-first, with unit, integratio
 # model: set a model here to control cost (optional)
 handoffs:
   - label: Back to default agent
-    agent: orchestrator
+    agent: Default
     prompt: Update the status and propose the next action.
     send: false
 ---

@@ -8,7 +8,7 @@ source_root=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
 destination="${HOME:?HOME must be set}/.copilot"
 
-personal="$source_root/instructions/copilot personalization.instructions.md"
+personal="$source_root/instructions/personalization.instructions.md"
 
 # Folders copied into ~/.copilot. prompts and workflow-kit hold the /flow prompt and the workflow kit helpers.
 install_dirs=(agents instructions skills workflows prompts workflow-kit)
