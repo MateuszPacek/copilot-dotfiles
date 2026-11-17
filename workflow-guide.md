@@ -1,72 +1,50 @@
-# Software workflow
+# Workflow guide
 
-The personal Copilot configuration defines four roles: functional requirements,
-technical requirements, coding, and staged testing. The `Default` personal
-agent coordinates the roles. Apply the same coordination workflow to every
-personal request, including sessions that do not select a custom agent.
-Explicit choices, the approved request, and existing approval controls remain
-in force.
+The workflow is business requirements (BR) -> product requirements (PRD) ->
+technical requirements (TR) -> code. Gates run in reverse: KPI definition,
+functional tests, integration tests, then unit tests. Use `/flow <action>` for
+one action at a time.
 
-Functional work produces product requirements, using model-based design whenever
-possible. Models describe product behavior independently of software
-implementation choices. Technical work includes software design and a technical
-specification linked to applicable product requirements and models. Coding and
-testing use these same approved inputs. If a suitable product model cannot be
-produced, the functional role explains the limitation and retains testable
-product requirements in text.
+## Copilot
 
-The functional role is named `product-requirements`; the technical role is
-named `technical-requirements`. Both load the personal `req-creator` skill,
-which holds their shared SMART and INCOSE requirements engineering guidance.
-Maintain that method in the skill, not as separate copies in the agents.
+Use `Default` as the coordinator. It hands requirements work to
+`requirements-author`, implementation to `coder`, and independent gates to
+`verifier`. The verifier must use a fresh chat for an independent gate. The
+`prompts/flow.prompt.md` file provides `/flow`; if it is not listed, configure
+`chat.promptFilesLocations` for `~/.copilot/prompts`.
 
-Select the Copilot session target and open **Chat: Open Customizations**. In
-**Agents**, find `Default` and the four role agents. Start a new session after
-changing agent files. Select `Default` where the session supports custom-agent
-selection. The custom-agent definition does not force its selection for every
-session; global personal instructions carry the coordination behavior across
-sessions. Agent selection does not guarantee model selection or delegation.
-If delegation is not available or allowed, `Default` reports the limitation
-and applies the relevant role directly. It does not claim the visible agent
-selection changed.
+## Claude Code
 
-The testing role checks code tests first, technical requirements second, and
-functional compliance third. It stops at a failed or unverified stage and reports
-later stages as not checked. Supply existing approved requirements for the
-checks; missing requirements are not invented. File changes and command
-execution still need the applicable permissions.
+In a Codespace, run `bash ~/.copilot/workflow-kit/install-claude.sh`. It
+installs the Claude-specific files and copies project helpers to
+`~/.workflow-kit`. Claude requirements and coding run in the main conversation;
+the verifier runs as a subagent. Claude authentication must use the user's
+subscription route. The session-start hook warns about API credentials but
+does not block them. Never store credentials in the repository.
 
-The current VS Code user settings specify `chat.defaultConfiguration.mode` as
-`plan`. Autopilot is not equivalent to Plan: it can run tools without approval
-and answer questions automatically. The mode setting does not prevent a user
-or runtime from selecting Autopilot. VS Code documentation reviewed here does
-not define a setting that forces a personal custom agent to be selected in
-every session.
+## Project workflow
 
-Personal agents are stored in the Copilot user agent directory. Project
-requirements, conventions, and evidence stay in the relevant project. No
-project files, hooks, external integrations, or new skills are necessary by
-default. Agent instructions guide the model; they are not a security boundary.
-Tool restrictions and delegation depend on the session runtime and must be
-verified in the intended environment.
+Run `/flow init` or `bash ~/.workflow-kit/scaffold-project.sh` from the project
+root. The scaffold creates `workflow/state.md`, `workflow/config.md`,
+`workflow/gates/`, `docs/glossary.md`, and the four requirements documents
+without overwriting existing files.
 
-## Hook diagnostics
+Create stacked branches in order:
 
-The personal `baseline-probe` hook records `sessionStart` and
-`userPromptSubmitted` events. Its script stays in the protected personal hooks
-folder. It writes one UTF-8 JSONL file per invocation under
-`[IO.Path]::GetTempPath()\copilot-hook-diagnostics`, not beside the script.
-The runtime's temporary folder must permit writes in the session sandbox.
-Do not grant write access to hook code to enable diagnostic records.
+| Layer | Branch | Parent branch | Gate |
+|---|---|---|---|
+| BR | `feat/<slug>/br` | default branch | Each BR links to a KPI with a measurable target, pass threshold and data source |
+| PRD | `feat/<slug>/prd` | `feat/<slug>/br` | Functional tests pass and cover PRD IDs |
+| TR | `feat/<slug>/tr` | `feat/<slug>/prd` | Integration tests pass and cover TR IDs |
+| Code | `feat/<slug>/code` | `feat/<slug>/tr` | Unit tests pass and cover TR IDs |
 
-Each record contains the event name, UTC recording time, input property names,
-and flags for the presence of session and agent identifiers. It does not record
-prompt text or identifier values. Unique file names prevent concurrent hook
-invocations from appending to the same file. Files remain until temporary-file
-cleanup removes them. The old `baseline-probe.jsonl` beside the script is
-historical and is no longer updated.
+Passing layers use staged pull requests into their parent branch. The user
+merges pull requests bottom-up; agents never merge. A failed gate produces a
+report. Ask before filing an issue. A gate result is valid only for its
+recorded commit.
 
-A successful invocation writes `{}` to standard output. Invalid input or a
-failed file write produces an explicit error and exit code 1. After changing
-the hook, start a fresh chat and confirm that both event files appear without
-a hook error. Direct script tests alone do not verify runtime dispatch.
+The stack and test commands are project-specific. Fill in
+`workflow/config.md`; blank values must be asked, not guessed. A dashboard is
+separate work and is built only when requested. Instructions guide the model;
+they are not an enforcement boundary. Hard gates require repository branch
+protection and required checks.

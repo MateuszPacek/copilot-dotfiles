@@ -10,7 +10,7 @@ Files live in docs/requirements/ (business-requirements.md, product-requirements
 ## Procedure
 
 1. Read workflow/state.md, docs/glossary.md and the parent layer file only (PRD parent is BR, TR parent is PRD, BR has none).
-2. Use grill-me skill to interview the user before drafting. Stop when the user says it is enough, read your summary back and get a yes before drafting.
+2. Use the grilling skill to interview the user before drafting. Stop when the user says it is enough, read your summary back and get a yes before drafting.
 3. Draft or edit the layer file. Edit only the requirements that are affected.
 4. Check every requirement against the rules below and fix failures before showing the result.
 5. Update workflow/state.md. Propose the gate as the next action; do not run it.

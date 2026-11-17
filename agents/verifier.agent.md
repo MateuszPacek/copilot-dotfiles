@@ -3,7 +3,7 @@ description: Independent gate verifier. Checks one layer against its acceptance 
 # model: set a model here to control cost (optional)
 handoffs:
   - label: Back to default agent
-    agent: orchestrator
+    agent: Default
     prompt: Update the status and propose the next action.
     send: false
 ---
