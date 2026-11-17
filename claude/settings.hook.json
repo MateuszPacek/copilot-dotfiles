@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.workflow-kit/hooks/session-start.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

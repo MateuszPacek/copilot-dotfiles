@@ -8,6 +8,7 @@ Identify and briefly explain only the requested roles. A request can select more
 
 | Role | Agent | Necessary output |
 |---|---|---|
+| Business requirements | `business-requirements` | Measureable business requirements and solution-neutral models user-based usecases and scenarios, including goals, scope, and out-of-scope items. Explain when a suitable model cannot be produced. |
 | Functional requirements | `product-requirements` | Testable product requirements and implementation-independent behavior models where possible. Explain when a suitable model cannot be produced. |
 | Technical requirements | `technical-requirements` | Software design and technical specification linked to applicable product requirements and models. |
 | Coding | `solution-coding` | Authorized implementation using the same approved inputs and relevant validation. |
