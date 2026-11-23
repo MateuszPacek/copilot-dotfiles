@@ -7,7 +7,7 @@ KIT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$KIT")"
 HOME_KIT="${HOME:?HOME must be set}/.workflow-kit"
 CLAUDE="$HOME/.claude"
-SKILLS=(workflow-manager requirements-authoring test-first-coding gate-verification git-workflow grilling)
+SKILLS=(workflow-manager requirements-authoring requirements-diagrams test-first-coding gate-verification git-workflow grilling)
 DO_CLI=0
 
 fail() {

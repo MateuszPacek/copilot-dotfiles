@@ -17,3 +17,7 @@
 !/hooks/
 !/prompts/
 !/workflow-kit/
+
+# Python caches inside tracked folders.
+__pycache__/
+*.pyc

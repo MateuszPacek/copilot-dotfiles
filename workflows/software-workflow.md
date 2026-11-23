@@ -26,7 +26,8 @@ models describe behavior independently of implementation choices where a
 suitable model can be produced. Technical work includes software design and a
 technical specification linked to product requirements and models.
 
-Use stable IDs (`BR-001`, `PRD-001`, `TR-001`, `KPI-001`) and never reuse a
+Use stable path-based IDs (`BR-02-02-001`, `KPI-02-02-001`, `PRD-02-04-02-003`,
+`TR-02-01-003`) that follow the BR, KPI, PRD and TR folder trees and never reuse a
 retired ID. Requirements link to their parents and children. Acceptance
 criteria must be measurable. Tests identify the requirement they verify;
 uncovered requirements fail the gate.

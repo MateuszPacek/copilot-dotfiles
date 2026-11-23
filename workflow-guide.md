@@ -26,8 +26,9 @@ does not block them. Never store credentials in the repository.
 
 Run `/flow init` or `bash ~/.workflow-kit/scaffold-project.sh` from the project
 root. The scaffold creates `workflow/state.md`, `workflow/config.md`,
-`workflow/gates/`, `docs/glossary.md`, and the four requirements documents
-without overwriting existing files.
+`workflow/gates/`, `docs/glossary.md`, the requirements tree READMEs
+(`docs/requirements/br/`, `kpi/`, `prd/`, `tr/`) and the chapter templates in
+`docs/requirements/templates/`, without overwriting existing files.
 
 Create stacked branches in order:
 

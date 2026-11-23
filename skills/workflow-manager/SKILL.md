@@ -11,9 +11,9 @@ The user is the orchestrator. Do one action per request, report, and stop. Never
 
 | Layer | Files | Branch | PR base | Gate before it merges up |
 |---|---|---|---|---|
-| BR | docs/requirements/business-requirements.md, kpi-definition.md | feat/SLUG/br | default branch | KPI definition: every BR has measurable pass criteria |
-| PRD | docs/requirements/product-requirements.md | feat/SLUG/prd | feat/SLUG/br | functional tests of PRD acceptance criteria pass |
-| TR | docs/requirements/technical-requirements.md | feat/SLUG/tr | feat/SLUG/prd | integration tests of TR acceptance criteria pass |
+| BR | docs/requirements/br/, docs/requirements/kpi/ | feat/SLUG/br | default branch | KPI definition: every BR has measurable pass criteria |
+| PRD | docs/requirements/prd/ | feat/SLUG/prd | feat/SLUG/br | functional tests of PRD acceptance criteria pass |
+| TR | docs/requirements/tr/ | feat/SLUG/tr | feat/SLUG/prd | integration tests of TR acceptance criteria pass |
 | Code | source and tests | feat/SLUG/code | feat/SLUG/tr | unit tests pass |
 
 Branches are stacked: br from the default branch, prd from br, tr from prd, code from tr. Work goes top-down. PRs merge bottom-up: code to tr, tr to prd, prd to br, br to the default branch. The user merges; you never do.
